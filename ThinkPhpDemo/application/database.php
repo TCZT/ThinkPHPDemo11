@@ -55,5 +55,5 @@ return [
     // Query类
     'query'           => '\\think\\db\\Query',
     //开启自动时间戳
-    'auto_timestamp'=>true,
+    'auto_timestamp'=>false,
 ];

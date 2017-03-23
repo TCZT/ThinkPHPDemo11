@@ -17,7 +17,11 @@ return [
         ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
         ':name' => ['index/hello', ['method' => 'post']],
     ],
+    'user/:id' =>'app/FristDemo/User/read',
+    'user'=>'app/FristDemo/User/index',
+    'user/create' =>'app/FristDemo/User/create',
+    'user/deleteall'=>'app/FristDemo/User/deleteall',
+
 
 ];
-
 

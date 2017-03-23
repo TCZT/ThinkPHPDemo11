@@ -12,6 +12,7 @@ class User extends Model {
         return strtotime($value);
     }
 */
+    /*
     protected function scopeId($query){
         $query->where('id','>',2);
         return $query;
@@ -21,7 +22,14 @@ class User extends Model {
     protected $type = [
       'Birthday' =>'timestamp',
     ];
+    */
+    /*
     protected static function base($query){
         $query->where('email','not in','null');
+}
+    */
+    //范围一定要设置为publie !!!!
+    public function wife(){
+        return $this->hasOne('Wife');  //一定要对应模型名 区分大小写
     }
     }
