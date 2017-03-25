@@ -4,6 +4,6 @@ use think\Model;
 
 class friends extends Model{
     public function user(){
-        return $this->belongsToMany('User','user_friends');
+        return $this->belongsToMany('User','think_user_friends');
     }
 }

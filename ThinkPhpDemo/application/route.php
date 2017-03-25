@@ -21,7 +21,8 @@ return [
     'user'=>'app/FristDemo/User/index',
     'user/create' =>'app/FristDemo/User/create',
     'user/deleteall'=>'app/FristDemo/User/deleteall',
-
+    'delete/:id' =>'app/FristDemo/User/delete',
+    'readf/:id'=>'app/FristDemo/User/readf'
 
 ];
 

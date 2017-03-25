@@ -33,6 +33,6 @@ class User extends Model {
         return $this->hasOne('Wife');  //一定要对应模型名 区分大小写
     }
     public function  friends(){
-          return $this->belongsToMany('Friends','user_friends');
+          return $this->belongsToMany('Friends','think_user_friends');
     }
     }

@@ -3,7 +3,6 @@ namespace app\FristDemo\controller;
 use app\FristDemo\model\User as UserModel;
 use app\FristDemo\model\Wife;
 use think\Controller;
-use think\Validate;
 use think\Db;
 use app\FristDemo\model\Friends;
 class User extends Controller{
@@ -11,8 +10,11 @@ class User extends Controller{
     public function delete($id){
         $user = UserModel::get($id);
         if($user){
-            echo '用户存在';
-            echo 'id'.$user->id;
+            echo '用户存在'.'<br>';
+            echo 'ID:'.'id'.$user->id.'<hr>';
+            if($user->delete()){
+                echo '删除成功';
+            }
             if($user->wife){
                 echo '关联对象存在';
                 $user->wife->delete();
@@ -41,11 +43,17 @@ class User extends Controller{
     $res = Db::execute('delete  from think_user');
 
 }
-public function readf(){
-      $user = UserModel::get();
-      echo "关联查询".$user->nickname;
-      dump ($user->friends);
+public function readf($id){
+      $user = UserModel::get($id);
+    echo "输入的id是：".$user->id.'<br>';
+      echo "用户名是：".$user->nickname.'<hr>';
+
+      $list = $user->friends;
+    foreach ($list as $item) {
+        echo 'F.ID：'.$item->id.'<br>';
+      }
     }
+
     public function update($id){
          $user = UserModel::get($id);
          if($user){
@@ -68,24 +76,20 @@ public function readf(){
         $wife->save();
     }
     public  function add(){
-        $user = new UserModel;  //创建模板对象
-       /*
-       $user->nickname='YangX';
-        $user->email='12@qq.com';
-        $user->birthday='1995-06-19';
-       */
-       $data = input('post.');
+        $user = UserModel::get();  //创建模板对象
 
+       //$data = input('post.');
+        //验证器验证
 
-
-
-         //验证器验证
-        if($user->allowField(true)->validate()->save(input('post.'))){
+        if($user->allowField(true)->validate(true)->save(input('post.'))){
            echo '成功写入'.$user->nickname;
+
+           /* 1对1关联
             $wife = new Wife;
             $wife->name='Tom';
             $wife->work='Student';
             $user->wife()->save($wife);
+           */
 
         }
         else {
@@ -107,8 +111,15 @@ public function readf(){
 
 
     public function read($id=''){
-        $user = UserModel::get($id,'wife');
-        dump($user->toJson());
+        echo 'read 方法开始'.'<br>';
+        echo '输入的id是：'.$id.'<hr>';
+        $user = UserModel::get($id);
+
+        if($user){
+            echo '用户ID：'.$user->id;
+        }
+
+        //dump($user->toJson());
         //dump($user->visible(['create_time','update_time'])->toArray());
        // dump($user->append(['user_status'])->toArray());
 
@@ -117,9 +128,11 @@ public function readf(){
         echo 'Email'.$user->email.'<br>';
         echo 'Birthday'.$user->birthday.'<hr>';
        */
-       if($user->wife){
+       isset($user->wife);
+      /* if(var_dump($user->wife)){
            echo $user->wife->name;
         }
+      */
     }
     //查询多条语句
     public function index(){
